@@ -99,12 +99,13 @@ npm run dev
 
 ## 📈 Roadmap
 
-*
+ALL I DO IS WIN WIN WIN NO MATTER WHAT!
 
 ---
 
 ## 👤 Author
 
+TUBBY_tubby_CODER, all rights reserved. 
 Developed in-house for a small-batch coffee roaster.
 
 ---
