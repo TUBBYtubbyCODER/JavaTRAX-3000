@@ -4,15 +4,14 @@ JavaTRAX is a full-stack order processing system built for a single user (the CE
 
 ## 📁 Project Structure
 
-```
-Java-trax/
-├── frontend/             # React-based UI for order entry and review
-├── backend/              # Node.js/Express server for PDF generation, DB access, Google Sheets integration
-├── shared/               # Shared utility modules (e.g., constants, schemas)
-├── .env                  # Environment config
-├── package.json          # Project-level scripts and dependencies
-├── README.md             # This file
-└── ...                   # Other config files (e.g., Dockerfile, .prettierrc, etc.)
+```📁 JavaTRAX-3000/ (The Ranch Headquarters)
+├── 🎨 frontend/             # React-based UI for order entry and review (The Pretty Face)
+├── 🔧 backend/              # Node.js/Express server for PDF generation, DB access, Google Sheets integration (The Engine Room)
+├── 🤝 shared/               # Shared utility modules - constants, schemas (The Family Recipes)
+├── 🔐 .env                  # Environment config (Where we keep the secrets)
+├── 📦 package.json          # Project-level scripts and dependencies (The Master Plan)
+├── 📖 README.md             # You are HERE, sugar!
+└── 🛠️  ...                  # Other config files - Dockerfile, .prettierrc, etc. (The Tool Shed)
 ```
 
 ## 🚀 Getting Started
@@ -20,8 +19,8 @@ Java-trax/
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Java-trax.git
-cd Java-trax
+git clone https://github.com/YOUR_USERNAME/JavaTRAX-3000.git
+cd JavaTRAX-3000
 ```
 
 ### 2. Install Dependencies
