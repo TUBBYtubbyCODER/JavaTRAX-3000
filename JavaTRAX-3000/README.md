@@ -1,104 +1,116 @@
-# JavaTRAX-3000
+# JavaTRAX ☕📦
 
-## Project Overview
+JavaTRAX is a full-stack order processing system built for a single user (the CEO of a small coffee roaster). It manages customer coffee orders, generates PDF invoices, tracks sales, and integrates with Google Sheets for customer and pricing references.
 
-JavaTRAX-3000 is a full-stack application that combines a React frontend with a Node.js Express backend. This project aims to provide a robust platform for building modern web applications.
+## 📁 Project Structure
 
-## Directory Structure
-
-The project is organized into two main directories: `frontend` and `backend`.
-
-```
-JavaTRAX-3000
-├── backend
-│   ├── src
-│   │   ├── app.js
-│   │   ├── controllers
-│   │   │   └── index.js
-│   │   ├── routes
-│   │   │   └── index.js
-│   │   └── models
-│   │       └── index.js
-│   ├── package.json
-│   └── README.md
-├── frontend
-│   ├── src
-│   │   ├── main.jsx
-│   │   ├── App.jsx
-│   │   ├── components
-│   │   │   └── ExampleComponent.jsx
-│   │   └── pages
-│   │       └── Home.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-├── README.md
+```📁 JavaTRAX-3000/ (The Ranch Headquarters)
+├── 🎨 frontend/             # React-based UI for order entry and review (The Pretty Face)
+├── 🔧 backend/              # Node.js/Express server for PDF generation, DB access, Google Sheets integration (The Engine Room)
+├── 🤝 shared/               # Shared utility modules - constants, schemas (The Family Recipes)
+├── 🔐 .env                  # Environment config (Where we keep the secrets)
+├── 📦 package.json          # Project-level scripts and dependencies (The Master Plan)
+├── 📖 README.md             # You are HERE, sugar!
+└── 🛠️  ...                  # Other config files - Dockerfile, .prettierrc, etc. (The Tool Shed)
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
+### 1. Clone the Repo
 
-- Node.js (version 14 or higher)
-- npm (Node Package Manager)
+```bash
+git clone https://github.com/YOUR_USERNAME/JavaTRAX-3000.git
+cd JavaTRAX-3000
+```
 
-### Installation
+### 2. Install Dependencies
 
-1. Clone the repository:
+Installs both frontend and backend packages.
 
-   ```
-   git clone https://github.com/yourusername/JavaTRAX-3000.git
-   ```
+```bash
+npm install
+# or, if using workspaces:
+npm install --workspaces
+```
 
-2. Navigate to the backend directory and install dependencies:
+### 3. Run in Development Mode
 
-   ```
-   cd JavaTRAX-3000/backend
-   npm install
-   ```
+Runs both frontend and backend concurrently with hot reload.
 
-3. Navigate to the frontend directory and install dependencies:
-   ```
-   cd ../frontend
-   npm install
-   ```
+```bash
+npm run dev
+```
 
-### Running the Application
+> **Note**: This assumes you're using something like `concurrently` or `turbo` to orchestrate `frontend` and `backend`.
 
-#### Backend
+---
 
-1. Navigate to the backend directory:
+## 🪰 Scripts
 
-   ```
-   cd JavaTRAX-3000/backend
-   ```
+| Script          | Description                          |
+| --------------- | ------------------------------------ |
+| `npm run dev`   | Starts both frontend and backend     |
+| `npm run build` | Builds frontend and backend for prod |
+| `npm run lint`  | Runs linters across all packages     |
+| `npm run test`  | Runs tests across all packages       |
 
-2. Start the Express server:
-   ```
-   npm start
-   ```
+---
 
-#### Frontend
+## 📦 Features
 
-1. Navigate to the frontend directory:
+* 💼 **Invoice PDF Generation**
+* 📈 **Customer Order History**
+* 🧾 **Google Sheets Price Sync**
+* �� **Coffee Sales Summary by Customer**
+* 🔐 **Secure by Design** – Auth/Access control ready
+* ⚙️ **Modular Architecture** – Easily expandable
 
-   ```
-   cd JavaTRAX-3000/frontend
-   ```
+---
 
-2. Start the Vite development server:
-   ```
-   npm run dev
-   ```
+## 📂 Data & Storage
 
-### Usage
+* **Google Sheets** — Used as a source of truth for pricing and contacts
+* **Internal Database** (e.g., SQLite, PostgreSQL) — Used to track orders and logs
+* **PDFs** stored locally or pushed to cloud (depending on config)
 
-- Access the frontend application at `http://localhost:3000`.
-- The backend API can be accessed at `http://localhost:5000/api`.
+---
 
-## Contributing
+## 🔒 Security
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or features.
+* Admin-only access (single user)
+* Secure API keys via `.env`
+* No public endpoints
 
-## License
-w
+---
+
+## 🛠️ Stack
+
+| Layer      | Tech                       |
+| ---------- | -------------------------- |
+| Frontend   | React + TailwindCSS        |
+| Backend    | Node.js + Express          |
+| PDF Gen    | `pdf-lib` / `puppeteer`    |
+| Data Store | SQLite / PostgreSQL        |
+| Auth       | Local JWT or session-based |
+| Sheets API | Google Sheets API (OAuth2) |
+
+---
+
+## 📈 Roadmap
+
+ALL I DO IS WIN WIN WIN NO MATTER WHAT!
+
+---
+
+## 👤 Author
+
+TUBBY_tubby_CODER, all rights reserved. 
+Developed in-house for a small-batch coffee roaster.
+
+---
+
+## 🧪 Dev Notes
+
+* Use `.env.example` as a template
+* Dev uses local SQLite for fast iteration
+* All packages/scripts run from root for monorepo simplicity

@@ -1,0 +1,9 @@
+[build]
+  base = "JavaTRAX-3000"
+  publish = "JavaTRAX-3000/dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
