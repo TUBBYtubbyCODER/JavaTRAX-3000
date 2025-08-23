@@ -1,0 +1,201 @@
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
+import path from 'path';
+
+interface InvoiceData {
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  customerAddress: string;
+  items: Array<{
+    sku: string;
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+    lineTotal: number;
+  }>;
+  subtotal: number;
+  discountAmount: number;
+  taxRate: number;
+  taxAmount: number;
+  total: number;
+  deliveryDate?: string;
+  deliveryInstructions?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export class PDFInvoiceGenerator {
+  async generateInvoice(invoiceData: InvoiceData): Promise<string> {
+    return new Promise((resolve, reject) => {
+      try {
+        const doc = new PDFDocument({ 
+          margin: 50,
+          size: 'A4'
+        });
+        
+        // Ensure invoices directory exists
+        const invoicesDir = path.join(__dirname, '../../invoices');
+        if (!fs.existsSync(invoicesDir)) {
+          fs.mkdirSync(invoicesDir, { recursive: true });
+        }
+        
+        const fileName = `invoice-${invoiceData.orderNumber}.pdf`;
+        const filePath = path.join(invoicesDir, fileName);
+        
+        const stream = fs.createWriteStream(filePath);
+        doc.pipe(stream);
+
+        // Header with company info
+        doc.fontSize(24)
+           .fillColor('#2563eb')
+           .text(process.env.COMPANY_NAME || 'Java Coffee Roasters', 50, 50);
+        
+        doc.fontSize(10)
+           .fillColor('#374151')
+           .text(process.env.COMPANY_ADDRESS || '', 50, 85)
+           .text(process.env.COMPANY_PHONE || '', 50, 100)
+           .text(process.env.COMPANY_EMAIL || '', 50, 115);
+
+        // Invoice title and details
+        doc.fontSize(20)
+           .fillColor('#1f2937')
+           .text('INVOICE', 400, 50);
+        
+        doc.fontSize(11)
+           .text(`Invoice #: ${invoiceData.orderNumber}`, 400, 80)
+           .text(`Date: ${new Date(invoiceData.createdAt).toLocaleDateString()}`, 400, 100);
+
+        // Horizontal line
+        doc.moveTo(50, 140).lineTo(545, 140).stroke('#e5e7eb');
+
+        // Customer information
+        doc.fontSize(12)
+           .fillColor('#1f2937')
+           .text('Bill To:', 50, 160);
+        
+        doc.fontSize(10)
+           .fillColor('#374151')
+           .text(invoiceData.customerName, 50, 180)
+           .text(invoiceData.customerEmail || '', 50, 195)
+           .text(invoiceData.customerAddress || '', 50, 210, { width: 200 });
+
+        // Delivery information
+        if (invoiceData.deliveryDate) {
+          doc.fontSize(12)
+             .fillColor('#1f2937')
+             .text('Delivery Info:', 350, 160);
+          
+          doc.fontSize(10)
+             .fillColor('#374151')
+             .text(`Delivery Date: ${new Date(invoiceData.deliveryDate).toLocaleDateString()}`, 350, 180);
+        }
+
+        // Line items table
+        let yPosition = 250;
+        
+        // Table headers with background
+        doc.rect(50, yPosition - 5, 495, 25).fill('#f3f4f6');
+        
+        doc.fontSize(10)
+           .fillColor('#1f2937')
+           .text('SKU', 60, yPosition + 5)
+           .text('Product', 120, yPosition + 5)
+           .text('Qty (lbs)', 320, yPosition + 5)
+           .text('Unit Price', 380, yPosition + 5)
+           .text('Total', 480, yPosition + 5);
+        
+        yPosition += 30;
+
+        // Line items
+        invoiceData.items.forEach((item, index) => {
+          // Alternate row colors
+          if (index % 2 === 1) {
+            doc.rect(50, yPosition - 5, 495, 20).fill('#f9fafb');
+          }
+          
+          doc.fillColor('#374151')
+             .text(item.sku, 60, yPosition)
+             .text(item.productName, 120, yPosition, { width: 180 })
+             .text(item.quantity.toFixed(2), 320, yPosition)
+             .text(`$${item.unitPrice.toFixed(2)}`, 380, yPosition)
+             .text(`$${item.lineTotal.toFixed(2)}`, 480, yPosition);
+          
+          yPosition += 20;
+        });
+
+        // Totals section
+        yPosition += 20;
+        doc.moveTo(350, yPosition).lineTo(545, yPosition).stroke('#e5e7eb');
+        yPosition += 15;
+        
+        doc.fontSize(10)
+           .fillColor('#374151')
+           .text(`Subtotal:`, 400, yPosition)
+           .text(`$${invoiceData.subtotal.toFixed(2)}`, 480, yPosition);
+        
+        yPosition += 18;
+        
+        if (invoiceData.discountAmount > 0) {
+          doc.text(`Discount:`, 400, yPosition)
+             .text(`-$${invoiceData.discountAmount.toFixed(2)}`, 480, yPosition);
+          yPosition += 18;
+        }
+        
+        doc.text(`Tax (${(invoiceData.taxRate * 100).toFixed(2)}%):`, 400, yPosition)
+           .text(`$${invoiceData.taxAmount.toFixed(2)}`, 480, yPosition);
+        
+        yPosition += 18;
+        doc.moveTo(350, yPosition).lineTo(545, yPosition).stroke('#374151');
+        yPosition += 10;
+        
+        doc.fontSize(12)
+           .fillColor('#1f2937')
+           .text(`Total:`, 400, yPosition)
+           .text(`$${invoiceData.total.toFixed(2)}`, 480, yPosition);
+
+        // Additional information
+        if (invoiceData.deliveryInstructions || invoiceData.notes) {
+          yPosition += 60;
+          
+          if (invoiceData.deliveryInstructions) {
+            doc.fontSize(11)
+               .fillColor('#1f2937')
+               .text('Delivery Instructions:', 50, yPosition);
+            
+            doc.fontSize(10)
+               .fillColor('#374151')
+               .text(invoiceData.deliveryInstructions, 50, yPosition + 15, { width: 495 });
+            
+            yPosition += 50;
+          }
+          
+          if (invoiceData.notes) {
+            doc.fontSize(11)
+               .fillColor('#1f2937')
+               .text('Notes:', 50, yPosition);
+            
+            doc.fontSize(10)
+               .fillColor('#374151')
+               .text(invoiceData.notes, 50, yPosition + 15, { width: 495 });
+          }
+        }
+
+        // Footer
+        doc.fontSize(8)
+           .fillColor('#6b7280')
+           .text('Thank you for your business!', 50, 750, { align: 'center', width: 495 });
+
+        doc.end();
+
+        stream.on('finish', () => resolve(fileName));
+        stream.on('error', reject);
+        
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+}
+
+export default new PDFInvoiceGenerator();
