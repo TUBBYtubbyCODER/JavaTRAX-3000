@@ -2,15 +2,15 @@
   # The directory where your project files are located
   base = "JavaTRAX-3000"
   
-  # The directory where the built files will be published from
+  # CORRECTED: Single JavaTRAX-3000, not double nested
   publish = "JavaTRAX-3000/dist"
   
   # The build command to run
   command = "npm ci && npm run build"
 
 [build.environment]
-  # Specify Node.js version
-  NODE_VERSION = "18"
+  # FIXED: Update Node.js version to support Vite 7.1.3
+  NODE_VERSION = "20"
   
   # Optimize for production
   NODE_ENV = "production"
