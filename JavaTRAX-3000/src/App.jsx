@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import OrderGenerator from './components/OrderGenerator'
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -53,7 +54,7 @@ function App() {
             alignItems: 'center',
             gap: '10px'
           }}>
-            ☕ JavaTRAX-3000 CRM
+            ☕ JavaTRAX - Your FULLY Caffeinated CRM
             <span style={{
               fontSize: '1rem',
               background: '#FF6B35',
@@ -105,14 +106,14 @@ function App() {
         </div>
       </nav>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation - UPDATED to include orders tab */}
       <div style={{
         background: 'rgba(160, 82, 45, 0.9)',
         padding: '0 30px',
         borderBottom: '2px solid #8B4513',
         flexShrink: 0
       }}>
-        {['dashboard', 'customers', 'deals', 'analytics'].map(tab => (
+        {['dashboard', 'customers', 'orders', 'deals', 'analytics'].map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -133,6 +134,7 @@ function App() {
           >
             {tab === 'dashboard' && '📊'} 
             {tab === 'customers' && '👥'} 
+            {tab === 'orders' && '📋'} 
             {tab === 'deals' && '💰'} 
             {tab === 'analytics' && '📈'} 
             {tab}
@@ -143,7 +145,7 @@ function App() {
       {/* Main Content */}
       <div style={{
         flex: 1,
-        padding: '20px 30px',
+        padding: activeTab === 'orders' ? '0' : '20px 30px', // Remove padding for orders tab
         overflowY: 'auto',
         overflowX: 'hidden'
       }}>
@@ -326,6 +328,11 @@ function App() {
               </table>
             </div>
           </div>
+        )}
+
+        {/* NEW ORDERS TAB - This renders the OrderGenerator component */}
+        {activeTab === 'orders' && (
+          <OrderGenerator />
         )}
 
         {(activeTab === 'deals' || activeTab === 'analytics') && (
