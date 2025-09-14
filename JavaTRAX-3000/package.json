@@ -1,23 +1,118 @@
 {
-  "name": "javatrax-3000",
-  "version": "1.0.1",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+  "name": "java-trax",
+  "version": "1.1.0",
+  "description": "JavaTRAX - Your FULLY Caffeinated CRM - A coffee-themed customer relationship management system",
+  "private": true,
+  "homepage": "java-trax.com",
+  "keywords": [
+    "crm",
+    "coffee",
+    "customer-management",
+    "react",
+    "javascript",
+    "caffeinated",
+    "invoicing",
+    "business-management"
+  ],
+  "author": {
+    "name": "JavaTRAX Team",
+    "email": "tubby@java-trax.com",
+    "url": "https://java-trax.com"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "dependencies": {
-    "jspdf": "^3.0.2",
-    "jspdf-autotable": "^5.0.2",
-    "lucide-react": "^0.542.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-scripts": "^0.0.0",
+    "web-vitals": "^3.5.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8"
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/jest": "^29.5.8",
+    "eslint": "^8.53.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .js,.jsx --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,json,css,md}\"",
+    "analyze": "npm run build && npx source-map-explorer 'build/static/js/*.js'",
+    "preview": "npm run build && npx serve -s build",
+    "clean": "rm -rf build node_modules package-lock.json && npm install",
+    "typecheck": "npx tsc --noEmit --jsx react-jsx src/**/*.{js,jsx}",
+    "pre-commit": "npm run format && npm run lint && npm run test -- --run --watchAll=false"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-console": "warn",
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 100,
+    "bracketSpacing": true,
+    "arrowParens": "avoid"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:3001",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/reportWebVitals.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
+      }
+    }
+  },
+  "config": {
+    "app": {
+      "name": "JavaTRAX",
+      "version": "1.1.0",
+      "theme": "coffee",
+      "features": {
+        "dashboard": true,
+        "customers": true,
+        "orders": true
+      }
+    }
   }
 }

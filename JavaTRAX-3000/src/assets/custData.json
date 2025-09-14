@@ -1,0 +1,5 @@
+//Need to componentize the App.jsx and import this JSON file for customer info & coffee prices.   
+    { id: 1, name: 'Espresso Enterprises', contact: 'John Brew', status: 'Active', value: '$2,500' },
+    { id: 2, name: 'Latte Labs', contact: 'Sarah Bean', status: 'Pending', value: '$1,800' },
+    { id: 3, name: 'Mocha Motors', contact: 'Mike Grind', status: 'Active', value: '$3,200' },
+    { id: 4, name: 'Cappuccino Corp', contact: 'Emma Roast', status: 'Closed', value: '$950' }
